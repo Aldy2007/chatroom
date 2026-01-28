@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗨️ 多人聊天室</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>🗨️ 多人聊天室</h1>
+                <p>加入聊天，开始交流</p>
+            </div>
+            <div class="login-form">
+                <div class="avatar-selector">
+                    <span class="selected-avatar" id="selected-avatar">😀</span>
+                    <div class="avatar-options" id="avatar-options">
+                        <span class="avatar-option" data-avatar="😀">😀</span>
+                        <span class="avatar-option" data-avatar="😎">😎</span>
+                        <span class="avatar-option" data-avatar="🤖">🤖</span>
+                        <span class="avatar-option" data-avatar="👻">👻</span>
+                        <span class="avatar-option" data-avatar="🦊">🦊</span>
+                        <span class="avatar-option" data-avatar="🐱">🐱</span>
+                        <span class="avatar-option" data-avatar="🐶">🐶</span>
+                        <span class="avatar-option" data-avatar="🐼">🐼</span>
+                        <span class="avatar-option" data-avatar="🦁">🦁</span>
+                        <span class="avatar-option" data-avatar="🐯">🐯</span>
+                        <span class="avatar-option" data-avatar="🐨">🐨</span>
+                        <span class="avatar-option" data-avatar="🐸">🐸</span>
+                        <span class="avatar-option" data-avatar="🐵">🐵</span>
+                        <span class="avatar-option" data-avatar="🦄">🦄</span>
+                        <span class="avatar-option" data-avatar="🐲">🐲</span>
+                    </div>
+                </div>
+                <input type="text" id="username-input" placeholder="输入你的昵称..." maxlength="20">
+                <button id="join-btn" class="btn-primary">进入聊天室</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 聊天界面 -->
+    <div id="chat-screen" class="screen hidden">
+        <div class="chat-container">
+            <!-- 侧边栏 - 在线用户 -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h3>👥 在线用户 <span id="users-count">0</span></h3>
+                    <button class="sidebar-toggle" id="sidebar-close">×</button>
+                </div>
+                <ul class="users-list" id="users-list"></ul>
+            </aside>
+
+            <!-- 主聊天区域 -->
+            <main class="chat-main">
+                <header class="chat-header">
+                    <button class="sidebar-toggle" id="sidebar-open">☰</button>
+                    <div class="chat-title">
+                        <h2>🗨️ 聊天室</h2>
+                        <span class="typing-indicator" id="typing-indicator"></span>
+                    </div>
+                    <div class="user-info">
+                        <span id="current-user-avatar"></span>
+                        <span id="current-user-name"></span>
+                    </div>
+                </header>
+
+                <div class="messages-container" id="messages-container">
+                    <div class="messages-list" id="messages-list"></div>
+                </div>
+
+                <footer class="chat-footer">
+                    <div class="input-container">
+                        <label class="image-upload-btn" title="发送图片">
+                            <input type="file" id="image-input" accept="image/*" hidden>
+                            📷
+                        </label>
+                        <textarea 
+                            id="message-input" 
+                            placeholder="输入消息... (Enter 发送, Shift+Enter 换行)"
+                            rows="1"
+                        ></textarea>
+                        <button id="send-btn" class="btn-send" title="发送消息">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="image-preview hidden" id="image-preview">
+                        <img id="preview-image" src="" alt="预览">
+                        <button id="cancel-image" class="btn-cancel">×</button>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- 图片查看器 -->
+    <div class="image-viewer hidden" id="image-viewer">
+        <div class="image-viewer-backdrop"></div>
+        <div class="image-viewer-content">
+            <img id="viewer-image" src="" alt="图片">
+            <button class="image-viewer-close" id="close-viewer">×</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ea3c1b6c-b586-4df6-bc90-58b899082ebe",
+    "type": "system",
+    "content": "asdasdasd 加入了聊天室",
+    "timestamp": "2026-01-28T02:58:33.127Z"
+  },
+  {
+    "id": "2e564ac8-efc2-45b4-bac1-da85e0b08aaa",
+    "type": "system",
+    "content": "14342 加入了聊天室",
+    "timestamp": "2026-01-28T02:58:43.415Z"
+  },
+  {
+    "id": "d064e899-8078-48e2-a150-92883c9bf1f7",
+    "type": "text",
+    "content": "asdasd",
+    "userId": "5pDREaRDtm_VslGSAAAD",
+    "username": "14342",
+    "avatar": "😀",
+    "color": "#45B7D1",
+    "timestamp": "2026-01-28T02:58:45.885Z"
+  },
+  {
+    "id": "89bc234c-fb8d-482d-bcfd-1ee1160ea4f8",
+    "type": "text",
+    "content": "aegoiuhsorigj",
+    "userId": "tcch1V2-UvAMzYKAAAAB",
+    "username": "asdasdasd",
+    "avatar": "😀",
+    "color": "#FFEAA7",
+    "timestamp": "2026-01-28T02:58:57.609Z"
+  },
+  {
+    "id": "72180973-15f7-40fe-b4f8-14767f91a199",
+    "type": "text",
+    "content": "aefaef",
+    "userId": "5pDREaRDtm_VslGSAAAD",
+    "username": "14342",
+    "avatar": "😀",
+    "color": "#45B7D1",
+    "timestamp": "2026-01-28T02:59:02.760Z"
+  }
+]
