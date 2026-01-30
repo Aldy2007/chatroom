@@ -17,6 +17,7 @@ const DATA_DIR = path.join(__dirname, 'data');
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 const MESSAGES_FILE = path.join(DATA_DIR, 'messages.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
+const ACCOUNTS_FILE = path.join(DATA_DIR, 'accounts.json');
 
 if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -31,6 +32,13 @@ if (!fs.existsSync(MESSAGES_FILE)) {
 }
 if (!fs.existsSync(USERS_FILE)) {
     fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2));
+}
+if (!fs.existsSync(ACCOUNTS_FILE)) {
+    // 初始化默认账号
+    fs.writeFileSync(ACCOUNTS_FILE, JSON.stringify({
+        "admin": "admin123",
+        "user1": "password1"
+    }, null, 2));
 }
 
 // 配置 multer 用于图片上传
@@ -105,8 +113,39 @@ function saveUser(user) {
     fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
 }
 
+// 读取账号配置
+function getAccounts() {
+    try {
+        const data = fs.readFileSync(ACCOUNTS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return {};
+    }
+}
+
+// 验证账号密码
+function verifyAccount(username, password) {
+    const accounts = getAccounts();
+    return accounts.hasOwnProperty(username) && accounts[username] === password;
+}
+
 // 在线用户列表
 const onlineUsers = new Map();
+
+// API: 登录验证
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+    
+    if (!username || !password) {
+        return res.status(400).json({ success: false, message: '请输入账号和密码' });
+    }
+    
+    if (verifyAccount(username, password)) {
+        res.json({ success: true, message: '登录成功' });
+    } else {
+        res.status(401).json({ success: false, message: '账号或密码错误' });
+    }
+});
 
 // API: 获取历史消息
 app.get('/api/messages', (req, res) => {

@@ -40,5 +40,27 @@
     "avatar": "😀",
     "color": "#45B7D1",
     "timestamp": "2026-01-28T02:59:02.760Z"
+  },
+  {
+    "id": "879844dd-8e49-40da-94c7-d11367834925",
+    "type": "system",
+    "content": "admin 加入了聊天室",
+    "timestamp": "2026-01-30T04:52:52.214Z"
+  },
+  {
+    "id": "5419e1a6-7dcc-4eba-8827-5640a0d2473d",
+    "type": "text",
+    "content": "你们刚好啊",
+    "userId": "PNpwOY5TiaF7dHa_AAAB",
+    "username": "admin",
+    "avatar": "🐼",
+    "color": "#F7DC6F",
+    "timestamp": "2026-01-30T04:52:58.018Z"
+  },
+  {
+    "id": "1723ba93-4e07-433e-9519-d0cab9b66f32",
+    "type": "system",
+    "content": "admin 离开了聊天室",
+    "timestamp": "2026-01-30T04:53:16.943Z"
   }
 ]

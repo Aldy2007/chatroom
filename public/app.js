@@ -20,6 +20,8 @@ class ChatApp {
         this.loginScreen = document.getElementById('login-screen');
         this.chatScreen = document.getElementById('chat-screen');
         this.usernameInput = document.getElementById('username-input');
+        this.passwordInput = document.getElementById('password-input');
+        this.loginError = document.getElementById('login-error');
         this.joinBtn = document.getElementById('join-btn');
         this.selectedAvatarEl = document.getElementById('selected-avatar');
         this.avatarOptions = document.querySelectorAll('.avatar-option');
@@ -62,6 +64,9 @@ class ChatApp {
         // 加入聊天室
         this.joinBtn.addEventListener('click', () => this.joinChat());
         this.usernameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.passwordInput.focus();
+        });
+        this.passwordInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.joinChat();
         });
 
@@ -93,8 +98,13 @@ class ChatApp {
         this.imageViewer.querySelector('.image-viewer-backdrop').addEventListener('click', () => this.closeImageViewer());
     }
 
-    joinChat() {
+    async joinChat() {
         const username = this.usernameInput.value.trim();
+        const password = this.passwordInput.value;
+        
+        // 隐藏之前的错误提示
+        this.loginError.classList.add('hidden');
+        
         if (!username) {
             this.usernameInput.focus();
             this.usernameInput.style.borderColor = '#e53e3e';
@@ -103,8 +113,49 @@ class ChatApp {
             }, 1000);
             return;
         }
-
-        this.connectSocket(username);
+        
+        if (!password) {
+            this.passwordInput.focus();
+            this.passwordInput.style.borderColor = '#e53e3e';
+            setTimeout(() => {
+                this.passwordInput.style.borderColor = '';
+            }, 1000);
+            return;
+        }
+        
+        // 禁用登录按钮，防止重复点击
+        this.joinBtn.disabled = true;
+        this.joinBtn.textContent = '登录中...';
+        
+        try {
+            // 验证账号密码
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                this.connectSocket(username);
+            } else {
+                this.showLoginError(result.message || '账号或密码错误');
+            }
+        } catch (error) {
+            console.error('登录请求失败:', error);
+            this.showLoginError('网络错误，请重试');
+        } finally {
+            this.joinBtn.disabled = false;
+            this.joinBtn.textContent = '登录';
+        }
+    }
+    
+    showLoginError(message) {
+        this.loginError.textContent = message;
+        this.loginError.classList.remove('hidden');
     }
 
     connectSocket(username) {
